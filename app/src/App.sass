@@ -1,29 +1,52 @@
+@import './styles/variables'
+@import './styles/mixins'
+@import './styles/reset'
+
+.header
+	background-color: $back-clr
+
+h2
+	text-align: center
+	height: 10vh
+	@include flex-center()
+	@include font(18, 20, bolder)
+
 .App
-  text-align: center
+	text-align: center
+	background-color: $back-clr
+	height: 90vh
 
-.App-logo
-  height: 40vmin
-  pointer-events: none
+.App-body
+	background-color: $back-clr
+	display: flex
+	flex-direction: column
+	font-size: calc(10px + 2vmin)
 
-@media (prefers-reduced-motion: no-preference)
-  .App-logo
-    animation: App-logo-spin infinite 20s linear
-
-.App-header
-  background-color: #282c34
-  min-height: 100vh
-  display: flex
-  flex-direction: column
-  align-items: center
-  justify-content: center
-  font-size: calc(10px + 2vmin)
-  color: white
+.container
+	width: $tablet-width
+	margin: 0 auto
+	@include tablet
+		width: 100%
+		max-width: 100%
+		box-sizing: border-box
+		padding: 0 16px
 
 .App-link
-  color: #61dafb
+	color: $meesage-back-clr
+
+.messenger
+	height: 80vh
+	background-color: $back-clr
+	display: flex
+	flex-direction: column
+	overflow: hidden
+	align-items: flex-start
 
 @keyframes App-logo-spin
-  from
-    transform: rotate(0deg)
-  to
-    transform: rotate(360deg)
+	from
+		transform: rotate(0deg)
+	to
+		transform: rotate(360deg)
+
+.full-height
+	flex: 1

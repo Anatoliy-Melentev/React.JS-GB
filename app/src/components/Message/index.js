@@ -1,24 +1,19 @@
 import React from "react";
+import { Avatar } from '@mui/material';
 import "./styles.sass";
-
-// export const Message = ({ text }) => {
-// 	return <div className="header rotate">{text}</div>
-// }
 
 export class Message extends React.Component {
 	render() {
-		const { img, author, text, onMessageClick } = this.props;
-		const posClass = author === 'Me' ? 'message message__right-direction' : 'message';
+		const { message } = this.props;
+		const posClass = 'message' + (message.author.id === 'me' ? ' message__right-direction' : '');
 
 		return (
 			<div className={posClass}>
 				<div className="message__avatar">
-					<div className="message__avatar-border">
-						<img className="message__avatar-img" src={img} alt={author} />
-					</div>
-					<div className="message__author">{author}</div>
+					<Avatar src={message.author.img} alt={message.author.name} sx={{ width: 100, height: 100 }} />
+					<div className="message__author">{message.author.name}</div>
 				</div>
-				<div className="message__text" onClick={onMessageClick}> {text}</div>
+				<div className="message__text"> {message.text}</div>
 			</div>
 		);
 	}

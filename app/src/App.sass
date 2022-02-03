@@ -5,12 +5,6 @@
 .header
 	background-color: $back-clr
 
-h2
-	text-align: center
-	height: 10vh
-	@include flex-center()
-	@include font(18, 20, bolder)
-
 .App
 	text-align: center
 	background-color: $back-clr
@@ -18,9 +12,12 @@ h2
 
 .App-body
 	background-color: $back-clr
-	display: flex
-	flex-direction: column
+	display: grid
+	grid-template-columns: 400px 1fr
 	font-size: calc(10px + 2vmin)
+
+.App-body > section:first-child
+	border-right: solid 1px gray
 
 .container
 	width: $tablet-width
@@ -35,7 +32,7 @@ h2
 	color: $meesage-back-clr
 
 .messenger
-	height: 80vh
+	height: 95vh
 	background-color: $back-clr
 	display: flex
 	flex-direction: column

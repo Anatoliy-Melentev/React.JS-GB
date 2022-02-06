@@ -1,5 +1,7 @@
-import { Message } from '../Message'
+import { Message } from '../Message';
 
-export const MessageList = ({ messages }) => {
-	return messages.map((message, i) => <Message key={i} message={ message } />)
+export const MessageList = ({ messages, list }) => {
+	return messages.map((message, i) =>
+		<Message key={message.id} message={ message } />
+	)
 }

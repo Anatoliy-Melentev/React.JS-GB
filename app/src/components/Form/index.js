@@ -1,5 +1,5 @@
 import { AUTHORS } from "../../utils/constants";
-import { Button, TextField } from '@mui/material';
+import { IconButton, TextField } from '@mui/material';
 import { Send } from '@mui/icons-material';
 import { useState, useRef, useEffect } from "react";
 
@@ -20,7 +20,7 @@ export const Form = ({ onSubmit }) => {
 			return;
 		}
 
-		onSubmit({ text: value, author: AUTHORS.ME });
+		onSubmit(value, AUTHORS.ME);
 		setValue('');
 	};
 
@@ -31,7 +31,7 @@ export const Form = ({ onSubmit }) => {
 	return (
 		<form className="form-msg container" onSubmit={handleSubmit}>
 			<TextField inputRef={textField} size="large" value={value} onChange={handleChange} />
-			<Button size="large" variant="contained" type="submit" endIcon={<Send />}></Button>
+			<IconButton onClick={handleSubmit} aria-label="upload picture" component="submit"><Send /></IconButton>
 		</form>
 	);
 };

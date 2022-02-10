@@ -1,6 +1,6 @@
-import {ListItemButton, ListItemText, Button, TextField} from "@mui/material";
+import { ListItemButton, ListItemText, Button, TextField } from "@mui/material";
 import { useState } from "react";
-import avatar from "../../img/avatar.jpg";
+import avatar from "../../img/avatar.png";
 import {Add, Create} from "@mui/icons-material";
 import { grey } from "@mui/material/colors";
 
@@ -39,23 +39,23 @@ export const AddNewChat = ({ setChats }) => {
 		<div style={{ textDecoration: 'none' }} className="listitem">
 			<ListItemButton alignItems="flex-start">
 				{
-					showInput &&
+					showInput
+					?
 					<>
 						<TextField
 							value={value}
 							onChange={handleChange}
-							placeholder="Введите название"
+							placeholder="Введите название чата"
 							size="small"
-							sx={{ width: 256, marginLeft: 7, marginRight: 3 }}
+							sx={{ width: 268, marginLeft: 5.2, marginRight: 3 }}
 						/>
 						<Create
 							color="#aaa"
 							onClick={changeState}
-							sx={{ width: 24, height: 24, marginRight: 1, marginTop: 1.5, color: grey[700] }} />
+							sx={{ width: 24, height: 24, marginRight: 1, marginTop: 1, color: grey[700] }}
+						/>
 					</>
-				}
-				{
-					!showInput &&
+					:
 					<Button onClick={changeState} size='large'>
 						<Add sx={{ width: 35, height: 35, marginRight: 1.5 }} />
 						<ListItemText primary="Создать чат" sx={{ float: 'right' }} />

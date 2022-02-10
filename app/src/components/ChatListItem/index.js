@@ -9,7 +9,7 @@ export const ChatListItem = ({ value, setChats }) => {
 	const handleDelete = ({ target }) => {
 		setChats(prev => ({
 			...prev,
-			[target.id || target.parentElement.id || target.parentElement.parentElement.id]: undefined
+			[value.id]: undefined
 		}));
 	};
 

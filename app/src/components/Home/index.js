@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { MAINMENU } from "../../utils/constants";
 import {Avatar, ListItemIcon, MenuItem, MenuList,Typography} from "@mui/material";
+import {Header} from "../Header";
 
 export const Home = () => {
 	return (
 		<>
-			<h2>Home page</h2>
+			<Header>Home page</Header>
 				{
 					MAINMENU.filter(menu => menu.name !== 'home').map((menu, i)=> (
 						<Link key={i} to={menu.path}>

@@ -1,0 +1,14 @@
+@import '../../styles/mixins'
+
+.avatars
+	display: flex
+	@include flex-center(column)
+
+.userName
+	padding: 10px
+.userName > span
+	@include font(40,60)
+	text-transform: none
+
+.nameSection
+	@include flex-center(column)

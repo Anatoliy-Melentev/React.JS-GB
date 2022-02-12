@@ -1,16 +1,22 @@
+import { useSelector } from "react-redux";
+import { selectChats } from "../../store/chats/selectors";
+
 import { List } from "@mui/material";
 import { ChatListItem } from "../ChatListItem";
-import './style.sass';
 import { AddNewChat } from "../AddNewChat";
 
-export const Chats = ({ chatlist, setChats }) => {
+import './style.sass';
+
+export const Chats = () => {
+	const chatList = useSelector(selectChats);
+
 	return (
 		<section className="chatlist">
 			<List>
-				<AddNewChat setChats={setChats} />
+				<AddNewChat />
 				{
-					chatlist && chatlist.map((value, i) =>
-						value && <ChatListItem setChats={setChats} key={i} value={value} />
+					chatList && Object.values(chatList).map((value, i) =>
+						value && <ChatListItem key={i} value={value} />
 					)
 				}
 			</List>

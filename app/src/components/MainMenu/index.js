@@ -7,11 +7,11 @@ export const MainMenu = () => {
 	return (
 		<MenuList className="mainmenu">
 			{
-				MAINMENU.map((menu, i) => (
-					<Link key={i} to={menu.path}>
+				MAINMENU.map(({ text, icon, path }, i) => (
+					<Link key={i} to={path}>
 						<MenuItem>
 							<ListItemIcon>
-								<Avatar src={menu.icon} alt={menu.text} sx={{width: 30, height: 30}} variant="square"/>
+								<Avatar src={icon} alt={text} sx={{width: 30, height: 30}} variant="square"/>
 							</ListItemIcon>
 						</MenuItem>
 					</Link>

@@ -1,9 +1,12 @@
-import userava from '../img/userava.png';
-import elephant from '../img/elephant.png';
-import avatar from '../img/avatar.jpg';
 import home from "../img/home.png";
 import chat from "../img/chat.png";
 import user from "../img/user.png";
+
+import chats from "../img/chats.png";
+import work from "../img/work.png";
+import study from "../img/study.jpg";
+import friend from "../img/friend.png";
+import family from "../img/family.jpg";
 
 import avatar1 from '../img/avatar1.png';
 import avatar2 from '../img/avatar2.png';
@@ -13,6 +16,7 @@ import avatar5 from '../img/avatar5.png';
 import avatar6 from '../img/avatar6.png';
 import avatar7 from '../img/avatar7.png';
 import avatar8 from '../img/avatar8.png';
+import elephant from '../img/elephant.png';
 
 
 export const MAINMENU = [
@@ -40,7 +44,7 @@ export const AUTHORS = {
 	ME: {
 		id: 'me',
 		name: 'Я',
-		img: userava
+		img: avatar1
 	},
 	BOT: {
 		id: 'bot',
@@ -55,28 +59,28 @@ export const CHATS = {
 		id: 'work',
 		messages: [],
 		emptyText: 'Пока никто ничего не писал..',
-		img: avatar,
+		img: work,
 	},
 	study: {
 		name: 'Учебный',
 		id: 'study',
 		emptyText: 'Пока никто ничего не писал..',
 		messages: [],
-		img: avatar,
+		img: study,
 	},
 	friends: {
 		name: 'Друзья',
 		id: 'friends',
 		emptyText: 'Пока никто ничего не писал..',
 		messages: [],
-		img: avatar,
+		img: friend,
 	},
 	family: {
 		name: 'Семья',
 		id: 'family',
 		emptyText: 'Пока никто ничего не писал..',
 		messages: [],
-		img: avatar,
+		img: family,
 	}
 };
 
@@ -120,11 +124,6 @@ export const AVATARS = {
 		id: 'avatar8',
 		sex: 'w',
 		img: avatar8,
-	},
-	elephant: {
-		id: 'elephant',
-		sex: 'e',
-		img: elephant,
 	},
 };
 

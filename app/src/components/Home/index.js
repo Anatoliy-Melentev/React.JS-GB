@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
 import { MAINMENU } from "../../utils/constants";
-import {Avatar, ListItemIcon, MenuItem, MenuList,Typography} from "@mui/material";
-import {Header} from "../Header";
+import { Avatar, ListItemIcon, MenuItem, Typography } from "@mui/material";
+import { Header } from "../Header";
 
 export const Home = () => {
 	return (
 		<>
 			<Header>Home page</Header>
 				{
-					MAINMENU.filter(menu => menu.name !== 'home').map((menu, i)=> (
-						<Link key={i} to={menu.path}>
+					MAINMENU.filter(menu => menu.name !== 'home').map(({ text, icon, path }, i)=> (
+						<Link key={i} to={path}>
 							<MenuItem>
 								<ListItemIcon>
-									<Avatar src={menu.icon} alt={menu.text} sx={{width: 50, height: 50}} variant="square"/>
+									<Avatar src={icon} alt={text} sx={{width: 50, height: 50}} variant="square"/>
 								</ListItemIcon>
-								<Typography sx={{ marginLeft: 10 }} variant="inherit">{menu.text}</Typography>
+								<Typography sx={{ marginLeft: 10 }} variant="inherit">{text}</Typography>
 							</MenuItem>
 						</Link>
 					))

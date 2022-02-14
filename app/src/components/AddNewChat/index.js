@@ -1,39 +1,27 @@
-import { ListItemButton, ListItemText, Button, TextField } from "@mui/material";
 import { useState } from "react";
-import avatar from "../../img/avatar.png";
-import {Add, Create} from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { addChat } from "../../store/chats/actions";
+
+import { ListItemButton, ListItemText, Button, TextField } from "@mui/material";
+import { Add, Create } from "@mui/icons-material";
 import { grey } from "@mui/material/colors";
 
-export const AddNewChat = ({ setChats }) => {
-	const [showInput, setShowInput] = useState(false);
-	const [value, setValue] = useState('');
+export const AddNewChat = () => {
+	const
+		[showInput, setShowInput] = useState(false),
+		[value, setValue] = useState(''),
+		dispatch = useDispatch();
 
-	const handleChange = (e) => {
-		setValue(e.target.value);
-	};
+	const
+		handleChange = e => setValue(e.target.value),
+		changeState = () => {
+			if (showInput && value.length) {
+				dispatch(addChat(`chat${Date.now()}`, value));
+				setValue('');
+			}
 
-	const changeState = (e) => {
-		if (showInput && value.length) {
-			const id = `chat${Date.now()}`;
-
-			setChats(prev => {
-				return ({
-					...prev,
-					[id]: {
-						name: value,
-						id: id,
-						messages: [],
-						emptyText: 'Это вновь добавленный чат..',
-						img: avatar,
-					},
-				})
-			});
-
-			setValue('');
+			setShowInput(!showInput);
 		}
-
-		setShowInput(!showInput);
-	}
 
 	return (
 		<div style={{ textDecoration: 'none' }} className="listitem">
@@ -50,7 +38,6 @@ export const AddNewChat = ({ setChats }) => {
 							sx={{ width: 268, marginLeft: 5.2, marginRight: 3 }}
 						/>
 						<Create
-							color="#aaa"
 							onClick={changeState}
 							sx={{ width: 24, height: 24, marginRight: 1, marginTop: 1, color: grey[700] }}
 						/>

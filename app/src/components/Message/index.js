@@ -1,18 +1,19 @@
 import React from "react";
+import { shallowEqual, useSelector } from "react-redux";
 import { Avatar } from '@mui/material';
-import "./styles.sass";
-import {useSelector} from "react-redux";
+import { selectName, selectShowName, selectAvatarImg } from "../../store/profile/selectors";
 
-export const Message = ({ message }) => {
+import "./styles.sass";
+
+export const Message = ({ message: { author, text }}) => {
 	const
 		posClass = ['message'],
-		{ showName, name, avatar } = useSelector((state) => state),
-		author = message.author;
+		showName = useSelector(selectShowName, shallowEqual);
 
-	if (message.author?.id && message.author.id === 'me') {
+	if (author.id && author.id === 'me') {
 		posClass.push('message__right-direction');
-		author.name = name;
-		author.img = avatar.img;
+		author.name = useSelector(selectName);
+		author.img = useSelector(selectAvatarImg);
 	}
 
 	return (
@@ -21,7 +22,7 @@ export const Message = ({ message }) => {
 				<Avatar src={author.img} alt={author.name} sx={{ width: 100, height: 100 }} />
 				{ showName && <div className="message__author">{author.name}</div> }
 			</div>
-			<div className="message__text">{message.text}</div>
+			<div className="message__text">{text}</div>
 		</div>
 	);
 }

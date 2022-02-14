@@ -12,19 +12,19 @@ export const profileReducer = (state = initialState, action) => {
 		case CHANGE_SHOW_NAME: {
 			return {
 				...state,
-				showName: !state.showName,
+				showName: action.showName,
 			};
 		}
 		case CHANGE_NAME: {
 			return {
 				...state,
-				name: action.payload,
+				name: action.name,
 			};
 		}
 		case CHANGE_AVATAR: {
 			return {
 				...state,
-				avatar: AVATARS[action.payload],
+				avatar: AVATARS[action.id],
 			};
 		}
 		default:

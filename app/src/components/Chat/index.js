@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { Navigate, useParams } from 'react-router';
 import { useDispatch, useSelector } from "react-redux";
-import { addMessage } from "../../store/chats/actions";
-import {selectChats, selectMessages} from "../../store/chats/selectors";
+import { addMessageWithThunk } from "../../store/chats/actions";
+import { selectChats, selectMessages } from "../../store/chats/selectors";
 
 import { MessageList } from '../MessageList';
 import { Form } from '../Form';
@@ -19,23 +19,10 @@ export function Chat() {
 		messages = useSelector(selectMessages(chatId));
 
 	const
-		sendMessage = (text, author) => dispatch(addMessage(chatId, text, author)),
+		sendMessage = (text, author) => dispatch(addMessageWithThunk(chatId, text, author)),
 		handleAddMessage = text => sendMessage(text, AUTHORS.ME);
 
-	useEffect(() => {
-		if (!messages.length) return;
-		messenger.current?.scrollIntoView();
-
-		let timeout;
-		if (messages[messages.length - 1].author.id !== 'bot') {
-			timeout = setTimeout(() => sendMessage(
-				`Все говорят "${messages[messages.length - 1].text}", а ты купи слона!`,
-				AUTHORS.BOT
-			), 1000)
-		}
-
-		return () => clearTimeout(timeout);
-	}, [chats]);
+	useEffect(() => messenger.current?.scrollIntoView(), [chats]);
 
 	if (!chats[chatId]) {
 		return <Navigate to="/chats" replace />;

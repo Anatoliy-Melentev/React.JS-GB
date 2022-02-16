@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Navigate, useParams } from 'react-router';
-import { addMessage } from "../../store/chats/actions";
+import { useParams } from 'react-router';
+import { addMessageWithThunk } from "../../store/chats/actions";
 
 import { AUTHORS } from "../../utils/constants";
 import { IconButton, TextField } from '@mui/material';
@@ -22,7 +22,7 @@ export const Form = ({ onSubmit }) => {
 			e.preventDefault();
 			if (!text) return;
 
-			dispatch(addMessage(chatId, text, AUTHORS.ME));
+			dispatch(addMessageWithThunk(chatId, text, AUTHORS.ME));
 			setText('');
 		};
 
@@ -31,7 +31,9 @@ export const Form = ({ onSubmit }) => {
 	return (
 		<form className="form-msg container" onSubmit={handleSubmit}>
 			<TextField inputRef={textField} size="large" value={text} onChange={handleChange} />
-			<IconButton aria-label="upload picture" type="submit"><Send /></IconButton>
+			<IconButton sx={{ width: 50, height: 50 }} aria-label="upload picture" type="submit">
+				<Send />
+			</IconButton>
 		</form>
 	);
 };

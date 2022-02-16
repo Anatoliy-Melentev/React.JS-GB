@@ -1,17 +1,24 @@
 @import '../../styles/variables'
 @import '../../styles/mixins'
 
+.editAction
+	display: none
+
 .message
 	display: flex
 	flex-direction: row
 	background-color: transparent
 	margin-bottom: 0px
 	width: 100%
+	& .deleteButton
+		display: block !important
+
+	&:hover .editAction
+		display: block
 
 	&__right-direction
 		flex-direction: row-reverse
 		float: right
-
 
 	&__avatar-border
 		border-radius: 50% 50%
@@ -33,7 +40,7 @@
 
 	&__text
 		border: solid 1px transparent
-		margin: 60px 40px 0
+		margin: 60px 0 0 40px
 		padding: 20px
 		max-width: 60%
 		color: $message-clr
@@ -46,6 +53,11 @@
 		background-color: #edf7ed
 		border-top-left-radius: 15px
 		border-top-right-radius: 0
+		margin: 60px 40px 0 0
+
+	.editAction
+		padding-top: 44px
+
 
 
 

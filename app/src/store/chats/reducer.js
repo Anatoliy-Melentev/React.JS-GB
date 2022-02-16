@@ -1,5 +1,5 @@
 import { CHATS } from "../../utils/constants";
-import { ADD_CHAT, DELETE_CHAT, ADD_MESSAGE } from "./actions";
+import { ADD_CHAT, DELETE_CHAT, ADD_MESSAGE, EDIT_MESSAGE, DELETE_MESSAGE } from "./actions";
 import chats from "../../img/chats.png";
 
 const initialState = CHATS;
@@ -19,12 +19,11 @@ export const chatsReducer = (storeState = initialState, { type, payload }) => {
 			})
 		}
 		case DELETE_CHAT: {
-			const newStoreState = Object.assign({}, storeState);
-			delete newStoreState[payload];
+			const newStoreState = {...storeState};
+			delete newStoreState[payload.id];
 			return newStoreState;
 		}
 		case ADD_MESSAGE: {
-			debugger;
 			return ({
 				...storeState,
 				[payload.id]: {
@@ -34,6 +33,19 @@ export const chatsReducer = (storeState = initialState, { type, payload }) => {
 					}]
 				},
 			})
+		}
+		case EDIT_MESSAGE: {
+			const
+				newStoreState = {...storeState},
+				idx = newStoreState[payload.idChat].messages.findIndex(msg => msg.id === payload.idMsg);
+			newStoreState[payload.idChat].messages[idx].text = payload.text;
+			return newStoreState;
+		}
+		case DELETE_MESSAGE: {
+			const newStoreState = {...storeState};
+			newStoreState[payload.idChat].messages = newStoreState[payload.idChat].messages
+				.filter(msg => msg.id !== payload.idMsg);
+			return newStoreState;
 		}
 		default:
 			return storeState;

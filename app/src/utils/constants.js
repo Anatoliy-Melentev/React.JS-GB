@@ -43,13 +43,44 @@ export const MAINMENU = [
 export const AUTHORS = {
 	ME: {
 		id: 'me',
+		type: 'user',
 		name: 'Я',
-		img: avatar1
+		img: avatar4
 	},
-	BOT: {
+	ELEPHANT: {
 		id: 'bot',
+		type: 'bot',
 		name: 'Продавец слонов',
 		img: elephant,
+		answer: (text) => `Все говорят "${text}", а ты купи слона!`,
+	},
+	BOSS: {
+		id: 'boss',
+		type: 'bot',
+		name: 'Начальник',
+		img: avatar3,
+		answer: (text) => `Все говорят "${text}", а тебе нужно поработать в эти выходные!`,
+	},
+	RECTOR: {
+		id: 'rector',
+		type: 'bot',
+		name: 'Ректор',
+		img: avatar6,
+		answer: (text) => `Все говорят "${text}", но пересдача тебе не светит!`,
+	},
+	MOTHERINLAW: {
+		id: 'motherinlaw',
+		type: 'bot',
+		name: 'Тёща',
+		img: avatar7,
+		answer: (text) => `Все говорят "${text}", а я завтра приеду погостить на месяцок!`,
+	},
+	FRIEND: {
+		id: 'friend',
+		type: 'bot',
+		name: 'Лучший друг',
+		img: avatar1,
+		answer: (text) => `Все говорят "${text}", а я говорю пойдем выпьем!`,
 	},
 };
 
@@ -60,6 +91,7 @@ export const CHATS = {
 		messages: [],
 		emptyText: 'Пока никто ничего не писал..',
 		img: work,
+		bot: 'BOSS',
 	},
 	study: {
 		name: 'Учебный',
@@ -67,6 +99,7 @@ export const CHATS = {
 		emptyText: 'Пока никто ничего не писал..',
 		messages: [],
 		img: study,
+		bot: 'RECTOR',
 	},
 	friends: {
 		name: 'Друзья',
@@ -74,6 +107,7 @@ export const CHATS = {
 		emptyText: 'Пока никто ничего не писал..',
 		messages: [],
 		img: friend,
+		bot: 'FRIEND',
 	},
 	family: {
 		name: 'Семья',
@@ -81,6 +115,7 @@ export const CHATS = {
 		emptyText: 'Пока никто ничего не писал..',
 		messages: [],
 		img: family,
+		bot: 'MOTHERINLAW',
 	}
 };
 

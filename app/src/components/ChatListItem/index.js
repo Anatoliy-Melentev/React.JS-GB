@@ -31,7 +31,12 @@ export const ChatListItem = ({ value: { id, name, img, messages, emptyText } }) 
 					}
 				/>
 			</NavLink>
-			<IconButton onClick={handleDelete} aria-label="upload picture">
+			<IconButton
+				sx={{ width: 40, height: 40 }}
+				className="deleteButton"
+				onClick={handleDelete}
+				aria-label="upload picture"
+			>
 				<Delete />
 			</IconButton>
 		</ListItemButton>

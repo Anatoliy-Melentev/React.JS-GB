@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { MainMenu } from "../MainMenu";
+import { MainMenu } from "../../components/MainMenu";
 import { Home } from "../Home";
 import { ChatPage } from "../ChatPage";
-import { Chat } from "../Chat";
+import { Chat } from "../../components/Chat";
 import ConnectedProfile, { Profile } from "../Profile";
+import { Articles } from "../Articles";
 import { grey } from "@mui/material/colors";
 import "./style.sass";
 
@@ -21,6 +22,7 @@ export const Router = () => (
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="profile" element={<Profile />} />
+						<Route path="/articles" element={<Articles />} />
 						<Route path="chats" element={<ChatPage />}>
 							<Route path=":chatId" element={<Chat />} />
 						</Route>

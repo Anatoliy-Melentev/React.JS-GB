@@ -1,4 +1,4 @@
-import { Chats } from "../Chats";
+import { Chats } from "../../components/Chats";
 import { Outlet } from "react-router-dom";
 import "./style.sass"
 

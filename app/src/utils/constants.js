@@ -16,6 +16,8 @@ import avatar5 from '../img/avatar5.png';
 import avatar6 from '../img/avatar6.png';
 import avatar7 from '../img/avatar7.png';
 import avatar8 from '../img/avatar8.png';
+import quiz from '../img/quiz.jpg';
+import quizboss from '../img/quizboss.png';
 import elephant from '../img/elephant.png';
 
 
@@ -37,6 +39,12 @@ export const MAINMENU = [
 		path: '/profile',
 		text: 'Profile',
 		icon: user,
+	},
+	{
+		name: 'articles',
+		path: '/articles',
+		text: 'Articles',
+		icon: study,
 	},
 ];
 
@@ -82,9 +90,27 @@ export const AUTHORS = {
 		img: avatar1,
 		answer: (text) => `Все говорят "${text}", а я говорю пойдем выпьем!`,
 	},
+	QUIZ: {
+		id: 'quiz',
+		type: 'bot',
+		name: 'Host',
+		img: quizboss,
+	},
 };
 
 export const CHATS = {
+	quiz: {
+		name: "Викторина",
+		id: 'quiz',
+		messages: [{
+			id: 'msg-0',
+			text: 'I want to play the same game with you!',
+			author: AUTHORS.QUIZ,
+		}],
+		emptyText: 'I want to play the same game with you!',
+		img: quiz,
+		bot: 'QUIZ',
+	},
 	work: {
 		name: 'Рабочий',
 		id: 'work',
@@ -122,42 +148,34 @@ export const CHATS = {
 export const AVATARS = {
 	avatar1: {
 		id: 'avatar1',
-		sex: 'm',
 		img: avatar1,
 	},
 	avatar2: {
 		id: 'avatar2',
-		sex: 'm',
 		img: avatar2,
 	},
 	avatar3: {
 		id: 'avatar3',
-		sex: 'm',
 		img: avatar3,
 	},
 	avatar4: {
 		id: 'avatar4',
-		sex: 'm',
 		img: avatar4,
 	},
 	avatar5: {
 		id: 'avatar5',
-		sex: 'w',
 		img: avatar5,
 	},
 	avatar6: {
 		id: 'avatar6',
-		sex: 'w',
 		img: avatar6,
 	},
 	avatar7: {
 		id: 'avatar7',
-		sex: 'w',
 		img: avatar7,
 	},
 	avatar8: {
 		id: 'avatar8',
-		sex: 'w',
 		img: avatar8,
 	},
 };

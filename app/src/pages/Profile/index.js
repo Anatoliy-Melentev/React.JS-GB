@@ -8,8 +8,8 @@ import { Avatar, Button, FormControlLabel, Checkbox, ListItemText, TextField } f
 import { Save, Edit } from "@mui/icons-material";
 import { grey } from "@mui/material/colors";
 
-import { AvatarButtons } from "../AvatarButtons";
-import { Header } from "../Header";
+import { AvatarButtons } from "../../components/AvatarButtons";
+import { Header } from "../../components/Header";
 
 import './style.sass';
 

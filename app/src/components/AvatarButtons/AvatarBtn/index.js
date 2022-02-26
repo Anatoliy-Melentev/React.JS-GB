@@ -1,15 +1,10 @@
 import { Avatar, IconButton } from "@mui/material";
-import { changeAvatar } from "../../../store/profile/actions";
-import { useDispatch } from "react-redux";
+import { auth } from "../../../services/firebase";
+import {set} from "firebase/database";
+import { getUserAvatarByRef } from "../../../services/firebase";
 
-export const AvatarBtn = ({ avatar: { id, img } }) => {
-	const
-		dispatch = useDispatch(),
-		handleChangeAvatar = () => dispatch(changeAvatar(id));
-
-	return (
-		<IconButton key={id} onClick={handleChangeAvatar} aria-label="upload picture">
-			<Avatar src={img} alt={id} sx={{ width: 70, height: 70 }} variant="square" />
-		</IconButton>
-	);
-};
+export const AvatarBtn = ({ avatar: { id, img } }) => (
+	<IconButton key={id} onClick={() => set(getUserAvatarByRef(auth.currentUser.uid), img)} aria-label="upload picture">
+		<Avatar src={img} alt={id} sx={{ width: 70, height: 70 }} variant="square" />
+	</IconButton>
+)

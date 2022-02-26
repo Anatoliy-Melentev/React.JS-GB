@@ -1,5 +1,6 @@
 import { Message } from '../Message';
 
-export const MessageList = ({ messages }) => {
-	return messages.map(message => <Message key={message.id} message={ message } />);
-}
+export const MessageList = ({ doScroll, messages = {} }) =>
+	messages && Object.values(messages).map(message =>
+		<Message key={message.id} doScroll={doScroll} message={message}/>)
+;

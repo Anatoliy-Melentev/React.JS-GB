@@ -8,17 +8,15 @@ import { AddNewChat } from "../AddNewChat";
 import './style.sass';
 
 export const Chats = () => {
-	const chatList = useSelector(selectChats);
+	const chats = useSelector(selectChats);
 
 	return (
 		<section className="chatlist">
 			<List>
 				<AddNewChat />
-				{
-					chatList && Object.values(chatList).map((value, i) =>
-						value && <ChatListItem key={i} value={value} />
-					)
-				}
+				{chats && Object.values(chats).map((value, i) =>
+					value && <ChatListItem key={i} value={value} />
+				)}
 			</List>
 		</section>
 	);

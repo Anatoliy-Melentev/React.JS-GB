@@ -1,17 +1,20 @@
 import { useState, useRef, useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router';
-import {addMessage, addMessageWithThunk} from "../../store/chats/actions";
-import {getQuiz} from "../../store/quiz/actions";
-import {selectQuizLoading, selectQuizQuestion,selectQuizError} from "../../store/quiz/selectors";
+import { initMessagesTracking } from "../../store/messages/actions";
+import { getQuiz } from "../../store/quiz/actions";
+import { selectQuizLoading, selectQuizQuestion, selectQuizError } from "../../store/quiz/selectors";
+import { auth, getChatsLastMsgRefById } from "../../services/firebase";
+import { set } from "firebase/database";
+import { getMessageRefById } from "../../services/firebase";
 
-import { AUTHORS } from "../../utils/constants";
+import { BOTS } from "../../utils/constants";
 import { IconButton, TextField } from '@mui/material';
 import { Send } from '@mui/icons-material';
 
 import "./styles.sass";
 
-export const Form = ({ onSubmit }) => {
+export const Form = () => {
 	const
 		dispatch = useDispatch(),
 		[text, setText] = useState(''),
@@ -20,23 +23,25 @@ export const Form = ({ onSubmit }) => {
 		quizError = useSelector(selectQuizError),
 		quizLoading = useSelector(selectQuizLoading),
 		{ chatId } = useParams(),
-		textField = useRef();
+		textField = useRef(),
+		sendMsg = async (author, text) => {
+			const msgId = `msg-${Date.now()}`;
+			await set(getMessageRefById(chatId, msgId), { id: msgId, author: author, text });
+			await set(getChatsLastMsgRefById(chatId), text);
+		};
 
 	let timeout;
 	const
 		handleChange = (e) => setText(e.target.value),
-		handleSubmit = (e) => {
+		handleSubmit = async (e) => {
 			e.preventDefault();
 			if (!text) return;
-
-			dispatch(addMessageWithThunk(chatId, text, AUTHORS.ME, playStatus));
+			await sendMsg(auth.currentUser.uid, text);
 
 			if (chatId === 'quiz') {
 				if ([0, 4].includes(playStatus)) {
 					clearTimeout(timeout);
-					timeout = setTimeout(() => {
-						dispatch(addMessage('quiz', `So, Let's start!`, AUTHORS.QUIZ));
-					}, 500);
+					timeout = setTimeout(() => sendMsg('quiz', `Let's start!`), 500);
 
 					dispatch(getQuiz());
 					setPlayStatus(1);
@@ -46,54 +51,57 @@ export const Form = ({ onSubmit }) => {
 					const yourAnswer = text.replace(/[^a-zA_Z ]/g,"").toLowerCase();
 
 					timeout = setTimeout(() => {
-						dispatch(addMessageWithThunk(
+						sendMsg(
 							'quiz',
 							`Your answer: ${text}, ` +
-							`and this is the ${yourAnswer.indexOf(trueAnswer) + 1 ? 'correct' : 'wrong'} answer ` +
-							` Correct answer: ${quiz.answer}`,
-							AUTHORS.QUIZ
-						));
+							`and this is the ${yourAnswer.indexOf(trueAnswer) + 1 ? 'correct' : 'wrong'} answer. ` +
+							` Correct answer: ${quiz.answer}`
+						);
 					}, 500);
 
 					setPlayStatus(1);
 					dispatch(getQuiz());
 				}
 			}
+			if (chatId === 'elephant') {
+				clearTimeout(timeout);
+				timeout = setTimeout(() => sendMsg('elephant', BOTS.elephant.answer(text)), 500);
+			}
 			setText('');
+			dispatch(initMessagesTracking(chatId))
 		};
 
+	useEffect(() => dispatch(initMessagesTracking(chatId)), []);
 	useEffect(() => textField.current?.focus(), []);
 
 	useEffect(() => {
 		if (quiz && playStatus === 1) {
 			clearTimeout(timeout);
-			timeout = setTimeout(() => {
-				dispatch(addMessageWithThunk('quiz', quiz.question, AUTHORS.QUIZ));
+			timeout = setTimeout(async () => {
+				await sendMsg('quiz', quiz.question);
 			}, 1000);
 
 			setPlayStatus(2);
 		}
-	}, [quiz])
-
+	}, [quiz]);
 
 	useEffect(() => {
 		if (quizError && playStatus !== 4) {
 			clearTimeout(timeout);
-			timeout = setTimeout(() => {
-				dispatch(addMessageWithThunk(
+			timeout = setTimeout(async () => {
+				await sendMsg(
 					'quiz',
-					'Sorry i forgot all the questions, If you want to try again, write to the chat',
-					AUTHORS.QUIZ
-				));
+					'Sorry i forgot all the questions, If you want to try again, write to the chat'
+				);
 			}, 1000);
 
 			setPlayStatus(4);
 		}
-	}, [quizError])
+	}, [quizError]);
 	return (
 		<>
 			<form className="form-msg container" onSubmit={handleSubmit}>
-				<span className="writeText"> {quizLoading && <>The host comes up with a new question...</>}</span>
+				<span className="writeText"> {quizLoading && <>The host writes a question...</>}</span>
 				<br />
 				<TextField inputRef={textField} size="large" value={text} onChange={handleChange} />
 				<IconButton sx={{ width: 50, height: 50 }} aria-label="upload picture" type="submit">

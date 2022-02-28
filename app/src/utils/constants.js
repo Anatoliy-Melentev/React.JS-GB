@@ -3,10 +3,6 @@ import chat from "../img/chat.png";
 import user from "../img/user.png";
 
 import chats from "../img/chats.png";
-import work from "../img/work.png";
-import study from "../img/study.jpg";
-import friend from "../img/friend.png";
-import family from "../img/family.jpg";
 
 import avatar1 from '../img/avatar1.png';
 import avatar2 from '../img/avatar2.png';
@@ -40,57 +36,17 @@ export const MAINMENU = [
 		text: 'Profile',
 		icon: user,
 	},
-	{
-		name: 'articles',
-		path: '/articles',
-		text: 'Articles',
-		icon: study,
-	},
 ];
 
-export const AUTHORS = {
-	ME: {
-		id: 'me',
-		type: 'user',
-		name: 'Я',
-		img: avatar4
-	},
-	ELEPHANT: {
-		id: 'bot',
+export const BOTS = {
+	elephant: {
+		id: 'elephant',
 		type: 'bot',
 		name: 'Продавец слонов',
 		img: elephant,
 		answer: (text) => `Все говорят "${text}", а ты купи слона!`,
 	},
-	BOSS: {
-		id: 'boss',
-		type: 'bot',
-		name: 'Начальник',
-		img: avatar3,
-		answer: (text) => `Все говорят "${text}", а тебе нужно поработать в эти выходные!`,
-	},
-	RECTOR: {
-		id: 'rector',
-		type: 'bot',
-		name: 'Ректор',
-		img: avatar6,
-		answer: (text) => `Все говорят "${text}", но пересдача тебе не светит!`,
-	},
-	MOTHERINLAW: {
-		id: 'motherinlaw',
-		type: 'bot',
-		name: 'Тёща',
-		img: avatar7,
-		answer: (text) => `Все говорят "${text}", а я завтра приеду погостить на месяцок!`,
-	},
-	FRIEND: {
-		id: 'friend',
-		type: 'bot',
-		name: 'Лучший друг',
-		img: avatar1,
-		answer: (text) => `Все говорят "${text}", а я говорю пойдем выпьем!`,
-	},
-	QUIZ: {
+	quiz: {
 		id: 'quiz',
 		type: 'bot',
 		name: 'Host',
@@ -102,47 +58,17 @@ export const CHATS = {
 	quiz: {
 		name: "Викторина",
 		id: 'quiz',
-		messages: [{
-			id: 'msg-0',
-			text: 'I want to play the same game with you!',
-			author: AUTHORS.QUIZ,
-		}],
 		emptyText: 'I want to play the same game with you!',
 		img: quiz,
 		bot: 'QUIZ',
 	},
-	work: {
-		name: 'Рабочий',
-		id: 'work',
-		messages: [],
+	elephant: {
+		name: 'Продавец слонов',
+		id: 'elephant',
 		emptyText: 'Пока никто ничего не писал..',
-		img: work,
-		bot: 'BOSS',
+		img: elephant,
+		bot: 'elephant',
 	},
-	study: {
-		name: 'Учебный',
-		id: 'study',
-		emptyText: 'Пока никто ничего не писал..',
-		messages: [],
-		img: study,
-		bot: 'RECTOR',
-	},
-	friends: {
-		name: 'Друзья',
-		id: 'friends',
-		emptyText: 'Пока никто ничего не писал..',
-		messages: [],
-		img: friend,
-		bot: 'FRIEND',
-	},
-	family: {
-		name: 'Семья',
-		id: 'family',
-		emptyText: 'Пока никто ничего не писал..',
-		messages: [],
-		img: family,
-		bot: 'MOTHERINLAW',
-	}
 };
 
 export const AVATARS = {

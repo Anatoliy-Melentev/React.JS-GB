@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addChat } from "../../store/chats/actions";
+import { initChatsTracking } from "../../store/chats/actions";
+import { set } from "firebase/database";
 
 import { ListItemButton, ListItemText, Button, TextField } from "@mui/material";
 import { Add, Create } from "@mui/icons-material";
 import { grey } from "@mui/material/colors";
+import { getChatsRefById, getMessagesRefByChatId } from "../../services/firebase";
 
 export const AddNewChat = () => {
 	const
@@ -16,12 +18,16 @@ export const AddNewChat = () => {
 		handleChange = e => setValue(e.target.value),
 		changeState = () => {
 			if (showInput && value.length) {
-				dispatch(addChat(`chat${Date.now()}`, value));
+				const id = `chat${Date.now()}`;
+				set(getChatsRefById(id), { id: id, name: value });
+				set(getMessagesRefByChatId(id), { empty: true });
 				setValue('');
 			}
 
 			setShowInput(!showInput);
 		}
+
+	useEffect(() => dispatch(initChatsTracking()), []);
 
 	return (
 		<div style={{ textDecoration: 'none' }} className="listitem">

@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { deleteChat } from "../../store/chats/actions";
+import { initChatsTracking } from "../../store/chats/actions";
 
 import { ListItemButton, ListItemAvatar, Avatar, ListItemText, IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -8,13 +8,27 @@ import { Delete } from "@mui/icons-material";
 import { LastText } from "./LastText";
 
 import './style.sass';
+import { onValue, set } from "firebase/database";
+import { getChatsLastMsgRefById, getChatsRefById } from "../../services/firebase";
+import {useEffect, useState} from "react";
+import {initMessagesTracking} from "../../store/messages/actions";
+import { CHATS } from "../../utils/constants";
 
 
-export const ChatListItem = ({ value: { id, name, img, messages, emptyText } }) => {
+export const ChatListItem = ({ value: { id, name, img, emptyText } }) => {
 	const
 		dispatch = useDispatch(),
-		handleDelete = () => dispatch(deleteChat(id)),
-		lastMsg = messages.length && messages[messages.length - 1];
+		[ lastMsg, setLastMsg ] = useState('Здесь пока ни кто ничего не писал'),
+		handleDelete = () => set(getChatsRefById(id), null);
+
+	useEffect(() => dispatch(initChatsTracking()), []);
+	useEffect(() => dispatch(initMessagesTracking(id)), []);
+
+	useEffect(() => onValue(getChatsLastMsgRefById(id), snapshot => setLastMsg(snapshot.val())));
+
+	if (['quiz','elephant'].includes(id)) {
+		img = CHATS[id].img;
+	}
 
 	return (
 		<ListItemButton className="listitem" key={id}>
@@ -25,20 +39,15 @@ export const ChatListItem = ({ value: { id, name, img, messages, emptyText } }) 
 				<ListItemText
 					className='text'
 					primary={name}
-					secondary={
-						(lastMsg && <LastText author={lastMsg.author.name} text={lastMsg.text} />)
-						|| emptyText
-					}
+					secondary={(lastMsg && <LastText text={lastMsg} />) || emptyText}
 				/>
 			</NavLink>
-			<IconButton
-				sx={{ width: 40, height: 40 }}
-				className="deleteButton"
-				onClick={handleDelete}
-				aria-label="upload picture"
-			>
-				<Delete />
-			</IconButton>
+			{
+				!['quiz','elephant'].includes(id) &&
+				<IconButton sx={{ width: 40, height: 40 }} className="deleteButton" onClick={handleDelete} >
+					<Delete />
+				</IconButton>
+			}
 		</ListItemButton>
 	);
 };

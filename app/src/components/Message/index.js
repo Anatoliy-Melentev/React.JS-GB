@@ -1,54 +1,75 @@
-import React, { useState } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Avatar } from '@mui/material';
-import { selectName, selectShowName, selectAvatarImg } from "../../store/profile/selectors";
-import { deleteMessage, editMessage } from "../../store/chats/actions";
 import { useParams } from "react-router";
 import { EditMsg } from "./EditMsg";
 import { EditBtn } from "./EditBtn";
 import { DelBtn } from "./DelBtn";
+import { auth, getUserShowNameByRef } from "../../services/firebase";
 
 import "./styles.sass";
+import { set, onValue } from "firebase/database";
+import { getMessageRefById, getMessageTextRefById, getUserAvatarByRef, getUserNameByRef } from "../../services/firebase";
+import { initMessagesTracking } from "../../store/messages/actions";
+import { BOTS } from "../../utils/constants";
 
-export const Message = ({ message: { id, author, text }}) => {
+export const Message = ({ doScroll, message: { id, author, text }}) => {
 	const
-		[ onEdit, setOnEdit ] = useState(false),
-		posClass = ['message'],
-		dispatch = useDispatch(),
 		{ chatId } = useParams(),
-		showName = useSelector(selectShowName, shallowEqual),
-		name = useSelector(selectName),
-		img = useSelector(selectAvatarImg);
+		[ onEdit, setOnEdit ] = useState(false),
+		[ showName, setShowName ] = useState(true),
+		[ name, setName ] = useState(''),
+		[ img, setImg ] = useState(''),
+		posClass = ['message'],
+		dispatch = useDispatch();
 
 	const
-		handleChangeMsg = (text) => {
+		handleChangeMsg = async (text) => {
 			if (!text) {
-				dispatch(deleteMessage(chatId, id))
+				await set(getMessageRefById(chatId, id), null)
 			} else {
 				setOnEdit(!onEdit);
-				dispatch(editMessage(chatId, id, text));
+				await set(getMessageTextRefById(chatId, id), text);
 			}
 		};
 
-	if (author.id && author.id === 'me') {
+	if (auth.currentUser.uid === author) {
 		posClass.push('message__right-direction');
-		author.name = name;
-		author.img = img;
 	}
+
+	useEffect(() => {
+		if (!(author in BOTS)) {
+			const unsubscribeName = onValue(getUserNameByRef(author), snapshot => setName(snapshot.val()));
+			const unsubscribeAvatar = onValue(getUserAvatarByRef(author), snapshot => setImg(snapshot.val()));
+			const unsubscribeShowName = onValue(getUserShowNameByRef(author), snapshot => setShowName(snapshot.val()));
+
+			return () => {
+				unsubscribeName();
+				unsubscribeAvatar();
+				unsubscribeShowName();
+			};
+		} else {
+			setName(BOTS[author].name);
+			setImg(BOTS[author].img);
+		}
+	}, [showName, name, img]);
+
+	useEffect(() => dispatch(initMessagesTracking(chatId)),[]);
+	useEffect(() => doScroll(),[]);
 
 	return (
 		<div className={posClass.join(' ')}>
 			<div className="message__avatar">
-				<Avatar src={author.img} alt={author.name} sx={{ width: 100, height: 100 }} />
-				{ showName && <div className="message__author">{author.name}</div> }
+				<Avatar src={img} alt={name} sx={{ width: 100, height: 100 }} />
+				{ showName && <div className="message__author">{name}</div> }
 			</div>
 			<div className="message__text">
 				<EditMsg onEdit={onEdit} text={text} changeMsg={handleChangeMsg} />
 			</div>
 			<div className="editAction">
-				<DelBtn deleteMsg={() => dispatch(deleteMessage(chatId, id))} />
+				<DelBtn deleteMsg={() => handleChangeMsg()} />
 				<EditBtn className="editButton" onEdit={onEdit} changeOnEdit={() => setOnEdit(!onEdit)} />
 			</div>
 		</div>
 	);
-}
+};

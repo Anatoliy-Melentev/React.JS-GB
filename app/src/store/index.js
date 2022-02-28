@@ -5,13 +5,13 @@ import storage from "redux-persist/lib/storage";
 
 import { profileReducer } from "./profile/reducer";
 import { chatsReducer } from "./chats/reducer";
-import { articlesReducer } from "./articles/reducer";
+import { msgsReducer } from "./messages/reducer";
 import { quizReducer } from "./quiz/reducer";
 
 const rootReducer = combineReducers({
   profile: profileReducer,
   chats: chatsReducer,
-  articles: articlesReducer,
+  msgs: msgsReducer,
   quiz: quizReducer,
 });
 

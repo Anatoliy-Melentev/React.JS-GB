@@ -13,6 +13,7 @@ export const AddNewChatView = ({ value, setValue, edit, changeState }) => (
 						sx={{ width: 268, marginLeft: 5.2, marginRight: 3 }}
 					/>
 					<Create
+						className="svgBtn"
 						onClick={changeState}
 						sx={{ width: 24, height: 24, marginRight: 1, marginTop: 1, color: grey[700] }}
 					/>

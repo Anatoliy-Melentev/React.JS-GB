@@ -19,7 +19,6 @@ export const AddNewChat = () => {
 				set(getMessagesRefByChatId(id), { empty: true });
 				setValue('');
 			}
-
 			setEdit(!edit);
 		}
 

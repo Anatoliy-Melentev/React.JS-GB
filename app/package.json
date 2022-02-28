@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "firestore-jest-mock": "^0.17.0",
     "redux-mock-store": "^1.5.4"
   }
 }

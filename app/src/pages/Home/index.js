@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MAINMENU } from "../../utils/constants";
 import { Avatar, ListItemIcon, MenuItem, Typography } from "@mui/material";
-import { Header } from "../Header";
+import { Header } from "../../components/Header";
 
 export const Home = () => {
 	return (

@@ -37,7 +37,8 @@ export const addMessageWithThunk = (id, text, author) => (dispatch, getState) =>
 	dispatch(addMessage(id, text, author));
 
 	const bot = AUTHORS[id in CHATS ? CHATS[id].bot : 'ELEPHANT'];
-	if (author.id !== 'bot') {
+
+	if (author.id !== 'bot' && bot.id !== 'quiz') {
 		clearTimeout(timeout);
 		timeout = setTimeout(() => {
 			dispatch(addMessage(id, bot.answer(text), bot));

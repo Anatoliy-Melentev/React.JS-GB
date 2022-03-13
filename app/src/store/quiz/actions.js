@@ -31,7 +31,7 @@ export const getQuiz = () => async (dispatch) => {
 		dispatch(getQuizSuccess(result));
 	} catch (err) {
 		dispatch(getQuizFailure(err));
-		console.warn(err);
+		//console.warn(err);
 	}
 	return Promise.resolve();
 };

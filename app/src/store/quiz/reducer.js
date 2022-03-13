@@ -1,9 +1,5 @@
 import { FETCH_STATUSES } from "../../utils/apiConstants";
-import {
-	GET_QUIZ_FAILURE,
-	GET_QUIZ_REQUEST,
-	GET_QUIZ_SUCCESS,
-} from "./actions";
+import { GET_QUIZ_FAILURE, GET_QUIZ_REQUEST, GET_QUIZ_SUCCESS } from "./actions";
 
 const initialState = {
 	data: [],
@@ -30,8 +26,8 @@ export const quizReducer = (state = initialState, { type, payload }) => {
 		case GET_QUIZ_FAILURE: {
 			return {
 				...state,
-				status: FETCH_STATUSES.FAILURE,
 				error: payload,
+				status: FETCH_STATUSES.FAILURE,
 			};
 		}
 		default:

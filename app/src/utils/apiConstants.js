@@ -1,8 +1,8 @@
-export const quizUrl = "http://jservice.io/api/random?count=1";
+export const quizUrl = 'http://jservice.io/api/random?count=1';
 
 export const FETCH_STATUSES = {
-	IDLE: 0,
-	REQUEST: 1,
-	SUCCESS: 2,
-	FAILURE: 3,
+  IDLE: 0,
+  REQUEST: 1,
+  SUCCESS: 2,
+  FAILURE: 3,
 };
